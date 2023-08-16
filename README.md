@@ -1,4 +1,9 @@
 # budget-tracker
+This project is to improve my javascript coding skill.
+Got started with project from https://github.com/DragonSenses/budget-tracker
+
+https://www.chartjs.org/
+
  A budget tracking web app that displays the users balance, income, and expenses. Also displays the transaction history which dynamically updates the balance, income, and expenses when new transactions are added. 
 
 # Description
