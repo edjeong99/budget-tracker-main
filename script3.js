@@ -29,7 +29,7 @@ const ctx = document.getElementById('myChart');
 
  let spentPer = 100 * spent/budget;
 
-
+//https://www.chartjs.org/docs/latest/charts/doughnut.html#pie
 new Chart(ctx, {
     type: 'pie',
   data:  {labels: [
