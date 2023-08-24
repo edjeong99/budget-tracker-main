@@ -49,7 +49,7 @@ function addTransaction(e) {
     transactions.push(transaction);
 
     // Add transaction to the DOM
-    ad / dTransactionDOM(transaction);
+    addTransactionDOM(transaction);
 
     // Update values of the Budget container
     updateValues();
