@@ -12,6 +12,7 @@ const text = document.getElementById("text");
 const currentMonth = document.getElementById("currentMonth");
 const dayLeft = document.getElementById("dayLeft");
 
+const transactions=[]
 const setDate = () => {
   let date = new Date();
   let year = date.getFullYear();
@@ -65,14 +66,14 @@ function init() {
   // For each transactions, add it as a list item and to the DOM
   list.innerHTML = "";
 
-  setDate();
+  //setDate();
 
-  transactions.forEach(addTransactionDOM);
-  updateValues();
+  //transactions.forEach(addTransactionDOM);
+  //updateValues();
 }
 
 // Initialize the app
-init();
+//init();
 
 /* Event Listeners */
 form.addEventListener("submit", addTransaction);
