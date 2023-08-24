@@ -36,8 +36,9 @@ function addTransaction(e) {
     amount: +amount.value,
   };
   console.log(transaction);
+
   transactions.push(transaction);
-  console.log(transactions);
+  console.log(transaction);
 }
 
 function updateValues() {
