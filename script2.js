@@ -12,7 +12,7 @@ const text = document.getElementById("text");
 const currentMonth = document.getElementById("currentMonth");
 const dayLeft = document.getElementById("dayLeft");
 
-const transactions=[]
+const transactions = [];
 const setDate = () => {
   let date = new Date();
   let year = date.getFullYear();
@@ -39,7 +39,8 @@ function addTransaction(e) {
   console.log(transaction);
 
   transactions.push(transaction);
-  console.log(transaction);
+
+  updateValues();
 }
 
 function updateValues() {
@@ -74,6 +75,5 @@ function init() {
 
 // Initialize the app
 //init();
-
 /* Event Listeners */
 form.addEventListener("submit", addTransaction);
