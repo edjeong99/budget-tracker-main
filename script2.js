@@ -2,9 +2,10 @@
 console.log("start");
 let budget = 500;
 let spent = 400;
+let goalamount = 100;
 
 const balance = document.getElementById("balance");
-const money_plus = document.getElementById("money-plus");
+const goal = document.getElementById("goal");
 const money_minus = document.getElementById("money-minus");
 const amount = document.getElementById("amount");
 const text = document.getElementById("text");
@@ -47,21 +48,13 @@ function addTransaction(e) {
 function updateValues() {
   // Loop through the transactions array and create a new array with only amounts
   const amounts = transactions.map((transaction) => transaction.amount);
+  let expense = expense + amount.value;
+  let balance = goalamount - expense;
 
   const total = amounts.reduce((acc, val) => (acc += val), 0).toFixed(2);
 
-  const income = amounts
-    .filter((transaction) => transaction > 0)
-    .reduce((acc, val) => (acc += val), 0)
-    .toFixed(2);
-  console.log(income);
-  const expense = amounts
-    .filter((transaction) => transaction < 0)
-    .reduce((acc, val) => (acc += val), 0)
-    .toFixed(2);
-
   balance.innerHTML = `$${total}`;
-  money_plus.innerHTML = `$${income}`;
+  goal.innerHTML = `$${goalamount}`;
   money_minus.innerHTML = `$${expense}`;
 }
 function init() {
