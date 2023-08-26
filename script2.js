@@ -29,6 +29,7 @@ const setDate = () => {
 };
 function generateID() {
   return new Date().getTime();
+  
 }
 
 function addTransaction(e) {
