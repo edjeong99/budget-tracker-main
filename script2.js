@@ -30,7 +30,10 @@ function generateID() {
   return new Date().getTime();
 }
 function changeGoal() {
-  console.log("changeGoal");
+  goalamount = goalnumber.value;
+  goal.innerHTML = `$${goalamount}`;
+  let balanceAmount = goalamount - expense;
+  balance.innerHTML = `$${balanceAmount}`;
 }
 function addTransaction(e) {
   e.preventDefault();
@@ -61,7 +64,6 @@ function init() {
   list.innerHTML = "";
 
   //setDate();
-
   //transactions.forEach(addTransactionDOM);
   //updateValues();
 }
