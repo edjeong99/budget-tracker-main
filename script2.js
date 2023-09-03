@@ -10,6 +10,7 @@ const goal = document.getElementById("goal");
 const money_minus = document.getElementById("money-minus");
 const amount = document.getElementById("amount");
 const text = document.getElementById("text");
+const goalnumber = document.getElementById("goalnumber");
 
 const currentMonth = document.getElementById("currentMonth");
 const dayLeft = document.getElementById("dayLeft");
@@ -30,8 +31,6 @@ const setDate = () => {
 function generateID() {
   return new Date().getTime();
   
-}
-
 function addTransaction(e) {
   e.preventDefault();
   const transaction = {
@@ -72,3 +71,4 @@ function init() {
 //init();
 /* Event Listeners */
 form.addEventListener("submit", addTransaction);
+form.addEventListener("submit", addGoals);
