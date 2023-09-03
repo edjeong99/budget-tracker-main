@@ -28,7 +28,10 @@ const setDate = () => {
 };
 function generateID() {
   return new Date().getTime();
-  
+}
+function changeGoal() {
+  console.log("changeGoal");
+}
 function addTransaction(e) {
   e.preventDefault();
   const transaction = {
@@ -64,4 +67,3 @@ function init() {
 }
 
 form.addEventListener("submit", addTransaction);
-form.addEventListener("submit", addGoals);
