@@ -46,7 +46,7 @@ function addTransaction(e) {
 function updateValues() {
   // Loop through the transactions array and create a new array with only amounts
   const amounts = transactions.map((transaction) => transaction.amount);
-  expense = expense + amount.value;
+  expense = amounts.reduce((acc, val) => (acc += val), 0).toFixed(2);
   let balanceAmount = goalamount - expense;
 
   balance.innerHTML = `$${balanceAmount}`;
