@@ -1,7 +1,7 @@
 "use strict";
 console.log("start");
-let budget = 500;
-let spent = 400;
+
+
 let goalamount = 100;
 let expense = 0;
 
@@ -48,11 +48,16 @@ function addTransaction(e) {
 
 function updateValues() {
   // Loop through the transactions array and create a new array with only amounts
-  const amounts = transactions.map((transaction) => transaction.amount);
-  expense = expense + amount.value;
-  let balanceAmount = goalamount - expense;
+  const amounts = transactions.map((transaction) => 
+  {console.log(transaction)
+    return transaction.amount
+  }
+    );
 
-  const total = amounts.reduce((acc, val) => (acc += val), 0).toFixed(2);
+    console.log(amounts);
+
+  expense = amounts.reduce((acc, val) => (acc += val), 0).toFixed(2);
+  let balanceAmount = goalamount - expense;
 
   balance.innerHTML = `$${balanceAmount}`;
   goal.innerHTML = `$${goalamount}`;
@@ -72,4 +77,4 @@ function init() {
 //init();
 /* Event Listeners */
 form.addEventListener("submit", addTransaction);
-form.addEventListener("submit", addGoals);
+//form.addEventListener("submit", addGoals);
