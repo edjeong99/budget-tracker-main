@@ -149,3 +149,19 @@ function init(){
   
   /* Event Listeners */
   form.addEventListener('submit', setDate );
+
+
+//   <input type="text" id="myText" value="Mickey">
+//     <button type="button" onclick="myFunction()">Try it</button>
+//     <p id="demo"></p>
+  
+      
+//     <script>
+      
+//     // Here the value is stored in new variable x 
+//     function myFunction() {
+//         var x = document.getElementById("myText").value;
+//         document.getElementById("demo").innerHTML = x;
+//     }
+//     </script>
+// </body>

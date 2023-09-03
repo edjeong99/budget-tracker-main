@@ -28,7 +28,7 @@ const setDate = () => {
 };
 function generateID() {
   return new Date().getTime();
-}
+  
 function addTransaction(e) {
   e.preventDefault();
   const transaction = {
@@ -45,14 +45,8 @@ function addTransaction(e) {
 
 function updateValues() {
   // Loop through the transactions array and create a new array with only amounts
-  const amounts = transactions.map((transaction) => {
-    console.log(transaction);
-    return transaction.amount;
-  });
-
-  console.log(amount);
-
-  expense = amounts.reduce((acc, val) => (acc += val), 0).toFixed(2);
+  const amounts = transactions.map((transaction) => transaction.amount);
+  expense = expense + amount.value;
   let balanceAmount = goalamount - expense;
 
   balance.innerHTML = `$${balanceAmount}`;
@@ -70,3 +64,4 @@ function init() {
 }
 
 form.addEventListener("submit", addTransaction);
+form.addEventListener("submit", addGoals);
