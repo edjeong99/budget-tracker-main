@@ -28,7 +28,7 @@ const setDate = () => {
 };
 function generateID() {
   return new Date().getTime();
-  
+}
 function addTransaction(e) {
   e.preventDefault();
   const transaction = {
@@ -53,6 +53,7 @@ function updateValues() {
   goal.innerHTML = `$${goalamount}`;
   money_minus.innerHTML = `$${expense}`;
 }
+
 function init() {
   // For each transactions, add it as a list item and to the DOM
   list.innerHTML = "";
@@ -64,4 +65,4 @@ function init() {
 }
 
 form.addEventListener("submit", addTransaction);
-form.addEventListener("submit", addGoals);
+
