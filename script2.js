@@ -29,6 +29,12 @@ const setDate = () => {
 function generateID() {
   return new Date().getTime();
 }
+function changeGoal() {
+  goalamount = goalnumber.value;
+  goal.innerHTML = `$${goalamount}`;
+  let balanceAmount = goalamount - expense;
+  balance.innerHTML = `$${balanceAmount}`;
+}
 function addTransaction(e) {
   e.preventDefault();
   const transaction = {
@@ -59,7 +65,6 @@ function init() {
   list.innerHTML = "";
 
   //setDate();
-
   //transactions.forEach(addTransactionDOM);
   //updateValues();
 }
