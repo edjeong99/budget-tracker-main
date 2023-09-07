@@ -9,7 +9,7 @@ const money_minus = document.getElementById("money-minus");
 const amount = document.getElementById("amount");
 const text = document.getElementById("text");
 const goalnumber = document.getElementById("goalnumber");
-
+const category = document.getElementById("category-select");
 const currentMonth = document.getElementById("currentMonth");
 const dayLeft = document.getElementById("dayLeft");
 
@@ -41,11 +41,14 @@ function addTransaction(e) {
     id: generateID(),
     text: text.value,
     amount: +amount.value,
+    category: category.value,
   };
   console.log(transaction);
 
   transactions.push(transaction);
 
+  text.value = "";
+  amount.value = "";
   updateValues();
 }
 
@@ -70,4 +73,3 @@ function init() {
 }
 
 form.addEventListener("submit", addTransaction);
-
