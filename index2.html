@@ -37,13 +37,21 @@
         Add Goals, if you wanna change it
       </button>
       <!-- End of Income/Expense container -->
-      <h3>Addls</h3>
 
       <h3>Add New Transaction</h3>
       <form id="form">
         <div class="form-control">
           <label for="text">Transaction Name</label>
           <input type="text" id="text" placeholder="Enter text&hellip;" />
+        </div>
+        <div>
+          <label for="category-select"> Choose a Category</label>
+          <select name="category" id="category-select">
+            <option value="">-- Chose Category--</option>
+            <option value="Shopping">Shopping</option>
+            <option value="Entertainment">Entertainment</option>
+            <option value="Theater">Theater</option>
+          </select>
         </div>
         <div class="form-control">
           <label for="amount">Amount</label>
