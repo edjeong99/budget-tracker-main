@@ -33,6 +33,7 @@ function generateID() {
   return new Date().getTime();
 }
 function changeGoal() {
+  console.log('changeGoal')
   goalamount = goalnumber.value;
   goal.innerHTML = `$${goalamount}`;
   let balanceAmount = goalamount - expense;
