@@ -1,7 +1,10 @@
 "use strict";
-console.log("start");
+console.log("badminton shuttle");
 let goalamount = 100;
 let expense = 0;
+let shoppingExpenses = 0;
+let entertainmentExpenses = 0;
+let theaterExpenses = 0;
 
 const balance = document.getElementById("balance");
 const goal = document.getElementById("goal");
@@ -46,9 +49,21 @@ function addTransaction(e) {
   console.log(transaction);
 
   transactions.push(transaction);
-
   text.value = "";
   amount.value = "";
+  category.value = "";
+
+  //check category, if entertainment is in category then add to entertainmentExpense
+  if (transaction.category === "Entertainment") {
+    entertainmentExpenses = entertainmentExpenses + transaction.amount;
+  }
+  if (transaction.category === "Shopping") {
+    shoppingExpenses = shoppingExpenses + transaction.amount;
+  }
+  if (transaction.category === "Theater") {
+    theaterExpensesExpenses = theaterExpenses + transaction.amount;
+  }
+
   updateValues();
 }
 
