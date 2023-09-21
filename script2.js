@@ -30,14 +30,16 @@ function generateID() {
   return new Date().getTime();
 }
 function changeGoal() {
-  console.log('changeGoal')
-  goalamount = goalnumber.value;
+
+  goalamount =  goalnumber.value;
   goal.innerHTML = `$${goalamount}`;
   let balanceAmount = goalamount - expense;
   balance.innerHTML = `$${balanceAmount}`;
 }
 function addTransaction(e) {
   e.preventDefault();
+  console.log(e)
+  console.log(e.target.value)
   const transaction = {
     id: generateID(),
     text: text.value,
@@ -50,11 +52,29 @@ function addTransaction(e) {
 
   text.value = "";
   amount.value = "";
+
+
+
+if(  transaction.category === 'Entertainment'){
+  entertainExpense = entertainExpense + transaction.amount
+}
+
+
+
+
   updateValues();
 }
 
 function updateValues() {
   // Loop through the transactions array and create a new array with only amounts
+
+// if category is "entertain"
+// add the amount to entertainExpense
+
+// else if cate is "theater", add amount to theraterExp
+// else if cate is "shopping" add amount to shoppingExp
+
+  
   const amounts = transactions.map((transaction) => transaction.amount);
   expense = amounts.reduce((acc, val) => (acc += val), 0).toFixed(2);
   let balanceAmount = goalamount - expense;
@@ -66,11 +86,12 @@ function updateValues() {
 
 function init() {
   // For each transactions, add it as a list item and to the DOM
-  list.innerHTML = "";
+ // list.innerHTML = "";
 
   //setDate();
   //transactions.forEach(addTransactionDOM);
-  //updateValues();
+  updateValues();
 }
+init();
 
 form.addEventListener("submit", addTransaction);
