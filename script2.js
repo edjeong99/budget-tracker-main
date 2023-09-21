@@ -1,7 +1,10 @@
 "use strict";
-console.log("start");
+console.log("Badminton Supplies");
 let goalamount = 100;
 let expense = 0;
+let shoppingExpenses = 0;
+let entertainmentExpenses = 0;
+let theaterExpenses = 0;
 
 const balance = document.getElementById("balance");
 const goal = document.getElementById("goal");
@@ -12,20 +15,24 @@ const goalnumber = document.getElementById("goalnumber");
 const category = document.getElementById("category-select");
 const currentMonth = document.getElementById("currentMonth");
 const dayLeft = document.getElementById("dayLeft");
+const entertainment = document.getElementById("entertainment");
+const shopping = document.getElementById("shopping");
+const theater = document.getElementById("theater");
+const ctx = document.getElementById("myChart");
 
 const transactions = [];
-const setDate = () => {
-  let date = new Date();
-  let year = date.getFullYear();
-  let month = date.getMonth();
-  let day = date.getDate();
-  let dayInMonth = new Date(year, month, 0).getDate();
-  let monthName = date.toLocaleString("en-US", { month: "long" });
-  console.log(day, dayInMonth);
+// const setDate = () => {
+// let date = new Date();
+// let year = date.getFullYear();
+// let month = date.getMonth();
+// let day = date.getDate();
+// let dayInMonth = new Date(year, month + 1, 0).getDate();
+// let monthName = date.toLocaleString("en-US", { month: "long" });
+// console.log(day, month, dayInMonth);
 
-  currentMonth.innerHTML = `${year}  ${monthName}`;
-  dayLeft.innerHTML = `${dayInMonth - day} days left`;
-};
+// currentMonth.innerHTML = `${year}  ${monthName}`;
+//dayLeft.innerHTML = `${dayInMonth - day} days left`;
+// };
 function generateID() {
   return new Date().getTime();
 }
@@ -49,18 +56,20 @@ function addTransaction(e) {
   console.log(transaction);
 
   transactions.push(transaction);
-
   text.value = "";
   amount.value = "";
+  category.value = "";
 
-
-
-if(  transaction.category === 'Entertainment'){
-  entertainExpense = entertainExpense + transaction.amount
-}
-
-
-
+  //check category, if entertainment is in category then add to entertainmentExpense
+  if (transaction.category === "Entertainment") {
+    entertainmentExpenses = entertainmentExpenses + transaction.amount;
+  }
+  if (transaction.category === "Shopping") {
+    shoppingExpenses = shoppingExpenses + transaction.amount;
+  }
+  if (transaction.category === "Theater") {
+    theaterExpenses = theaterExpenses + transaction.amount;
+  }
 
   updateValues();
 }
@@ -82,13 +91,35 @@ function updateValues() {
   balance.innerHTML = `$${balanceAmount}`;
   goal.innerHTML = `$${goalamount}`;
   money_minus.innerHTML = `$${expense}`;
+  //put each category expense into each of the category one by one!!!
+  entertainment.innerHTML = `entertainment : $${entertainmentExpenses}`;
+  shopping.innerHTML = `shopping : $${shoppingExpenses}`;
+  theater.innerHTML = `Theater : $${theaterExpenses}`;
+
+  new Chart(ctx, {
+    type: "pie",
+    data: {
+      labels: ["Entertainment", "Shopping", "Theater"],
+      datasets: [
+        {
+          label: "What I bought things in these category",
+          data: [entertainmentExpenses, shoppingExpenses, theaterExpenses],
+          backgroundColor: [
+            "rgb(255, 99, 132)",
+            "rgb(54, 162, 235)",
+            "rgb(255, 205, 86)",
+          ],
+          hoverOffset: 4,
+        },
+      ],
+    },
+  });
 }
 
 function init() {
   // For each transactions, add it as a list item and to the DOM
- // list.innerHTML = "";
-
-  //setDate();
+  //list.innerHTML = "";
+  // setDate();
   //transactions.forEach(addTransactionDOM);
   updateValues();
 }
