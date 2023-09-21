@@ -1,5 +1,5 @@
 "use strict";
-console.log("badminton shuttle");
+console.log("Badminton Supplies");
 let goalamount = 100;
 let expense = 0;
 let shoppingExpenses = 0;
@@ -15,25 +15,29 @@ const goalnumber = document.getElementById("goalnumber");
 const category = document.getElementById("category-select");
 const currentMonth = document.getElementById("currentMonth");
 const dayLeft = document.getElementById("dayLeft");
+const entertainment = document.getElementById("entertainment");
+const shopping = document.getElementById("shopping");
+const theater = document.getElementById("theater");
+const ctx = document.getElementById("myChart");
 
 const transactions = [];
-const setDate = () => {
-  let date = new Date();
-  let year = date.getFullYear();
-  let month = date.getMonth();
-  let day = date.getDate();
-  let dayInMonth = new Date(year, month, 0).getDate();
-  let monthName = date.toLocaleString("en-US", { month: "long" });
-  console.log(day, dayInMonth);
+// const setDate = () => {
+// let date = new Date();
+// let year = date.getFullYear();
+// let month = date.getMonth();
+// let day = date.getDate();
+// let dayInMonth = new Date(year, month + 1, 0).getDate();
+// let monthName = date.toLocaleString("en-US", { month: "long" });
+// console.log(day, month, dayInMonth);
 
-  currentMonth.innerHTML = `${year}  ${monthName}`;
-  dayLeft.innerHTML = `${dayInMonth - day} days left`;
-};
+// currentMonth.innerHTML = `${year}  ${monthName}`;
+//dayLeft.innerHTML = `${dayInMonth - day} days left`;
+// };
 function generateID() {
   return new Date().getTime();
 }
 function changeGoal() {
-  console.log('changeGoal')
+  console.log("changeGoal");
   goalamount = goalnumber.value;
   goal.innerHTML = `$${goalamount}`;
   let balanceAmount = goalamount - expense;
@@ -62,7 +66,7 @@ function addTransaction(e) {
     shoppingExpenses = shoppingExpenses + transaction.amount;
   }
   if (transaction.category === "Theater") {
-    theaterExpensesExpenses = theaterExpenses + transaction.amount;
+    theaterExpenses = theaterExpenses + transaction.amount;
   }
 
   updateValues();
@@ -77,15 +81,37 @@ function updateValues() {
   balance.innerHTML = `$${balanceAmount}`;
   goal.innerHTML = `$${goalamount}`;
   money_minus.innerHTML = `$${expense}`;
+  //put each category expense into each of the category one by one!!!
+  entertainment.innerHTML = `entertainment : $${entertainmentExpenses}`;
+  shopping.innerHTML = `shopping : $${shoppingExpenses}`;
+  theater.innerHTML = `Theater : $${theaterExpenses}`;
+
+  new Chart(ctx, {
+    type: "pie",
+    data: {
+      labels: ["Entertainment", "Shopping", "Theater"],
+      datasets: [
+        {
+          label: "What I bought things in these category",
+          data: [entertainmentExpenses, shoppingExpenses, theaterExpenses],
+          backgroundColor: [
+            "rgb(255, 99, 132)",
+            "rgb(54, 162, 235)",
+            "rgb(255, 205, 86)",
+          ],
+          hoverOffset: 4,
+        },
+      ],
+    },
+  });
 }
 
 function init() {
   // For each transactions, add it as a list item and to the DOM
-  list.innerHTML = "";
-
-  //setDate();
+  //list.innerHTML = "";
+  // setDate();
   //transactions.forEach(addTransactionDOM);
   //updateValues();
 }
-
+// init();
 form.addEventListener("submit", addTransaction);
