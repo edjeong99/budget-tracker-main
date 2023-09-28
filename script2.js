@@ -28,7 +28,7 @@ const myChart = new Chart(ctx, {
     datasets: [
       {
         label: "What I bought things in these category",
-        data: [10, 20, 30],
+        data: [0, 0, 0],
         backgroundColor: [
           "rgb(255, 99, 132)",
           "rgb(54, 162, 235)",
