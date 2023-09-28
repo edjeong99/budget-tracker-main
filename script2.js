@@ -1,5 +1,4 @@
 "use strict";
-console.log("Badminton Supplies");
 let goalamount = 100;
 let expense = 0;
 let shoppingExpenses = 0;
@@ -41,6 +40,27 @@ const myChart = new Chart(ctx, {
   },
 });
 
+
+const myChart = new Chart(ctx, {
+  type: "pie",
+  data: {
+    labels: ["Entertainment", "Shopping", "Theater"],
+    datasets: [
+      {
+        label: "What I bought things in these category",
+        data: [0, 0, 0],
+        backgroundColor: [
+          "rgb(255, 99, 132)",
+          "rgb(54, 162, 235)",
+          "rgb(255, 205, 86)",
+        ],
+        hoverOffset: 4,
+      },
+    ],
+  },
+});
+
+
 // const setDate = () => {
 // let date = new Date();
 // let year = date.getFullYear();
@@ -57,8 +77,8 @@ function generateID() {
   return new Date().getTime();
 }
 function changeGoal() {
-  console.log("changeGoal");
-  goalamount = goalnumber.value;
+
+  goalamount =  goalnumber.value;
   goal.innerHTML = `$${goalamount}`;
 
   let balanceAmount = goalamount - expense;
@@ -66,6 +86,8 @@ function changeGoal() {
 }
 function addTransaction(e) {
   e.preventDefault();
+  console.log(e)
+  console.log(e.target.value)
   const transaction = {
     id: generateID(),
     text: text.value,
@@ -100,6 +122,14 @@ function addTransaction(e) {
 
 function updateValues() {
   // Loop through the transactions array and create a new array with only amounts
+
+// if category is "entertain"
+// add the amount to entertainExpense
+
+// else if cate is "theater", add amount to theraterExp
+// else if cate is "shopping" add amount to shoppingExp
+
+  
   const amounts = transactions.map((transaction) => transaction.amount);
   expense = amounts.reduce((acc, val) => (acc += val), 0).toFixed(2);
   let balanceAmount = goalamount - expense;
@@ -111,11 +141,12 @@ function updateValues() {
   entertainment.innerHTML = `entertainment : $${entertainmentExpenses}`;
   shopping.innerHTML = `shopping : $${shoppingExpenses}`;
   theater.innerHTML = `Theater : $${theaterExpenses}`;
-
+console.log(myChart.data.datasets)
   myChart.data.datasets[0].data[0] = entertainmentExpenses;
   myChart.data.datasets[0].data[1] = shoppingExpenses;
   myChart.data.datasets[0].data[2] = theaterExpenses;
   myChart.update();
+  
 }
 
 function init() {
@@ -123,7 +154,9 @@ function init() {
   //list.innerHTML = "";
   // setDate();
   //transactions.forEach(addTransactionDOM);
-  //updateValues();
+  updateValues();
+ 
 }
-// init();
+//init();
+
 form.addEventListener("submit", addTransaction);
