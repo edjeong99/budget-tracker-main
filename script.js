@@ -71,6 +71,8 @@ function addTransactionDOM(transaction) {
   // Distinguish transaction as either expense or income
   const sign = transaction.amount < 0 ? "-" : "+";
 
+
+
   /* Recall: a list item in Transaction history follows the format:
       <li class="plus">Cash <span>+$700</span><button class="delete-btn">X</button></li>
   */
