@@ -21,6 +21,26 @@ const theater = document.getElementById("theater");
 const ctx = document.getElementById("myChart");
 
 const transactions = [];
+
+const myChart = new Chart(ctx, {
+  type: "pie",
+  data: {
+    labels: ["Entertainment", "Shopping", "Theater"],
+    datasets: [
+      {
+        label: "What I bought things in these category",
+        data: [0, 0, 0],
+        backgroundColor: [
+          "rgb(255, 99, 132)",
+          "rgb(54, 162, 235)",
+          "rgb(255, 205, 86)",
+        ],
+        hoverOffset: 4,
+      },
+    ],
+  },
+});
+
 // const setDate = () => {
 // let date = new Date();
 // let year = date.getFullYear();
@@ -40,6 +60,7 @@ function changeGoal() {
   console.log("changeGoal");
   goalamount = goalnumber.value;
   goal.innerHTML = `$${goalamount}`;
+
   let balanceAmount = goalamount - expense;
   balance.innerHTML = `$${balanceAmount}`;
 }
@@ -57,6 +78,11 @@ function addTransaction(e) {
   text.value = "";
   amount.value = "";
   category.value = "";
+  
+
+  function reset {
+    
+  }
 
   //check category, if entertainment is in category then add to entertainmentExpense
   if (transaction.category === "Entertainment") {
@@ -86,24 +112,10 @@ function updateValues() {
   shopping.innerHTML = `shopping : $${shoppingExpenses}`;
   theater.innerHTML = `Theater : $${theaterExpenses}`;
 
-  new Chart(ctx, {
-    type: "pie",
-    data: {
-      labels: ["Entertainment", "Shopping", "Theater"],
-      datasets: [
-        {
-          label: "What I bought things in these category",
-          data: [entertainmentExpenses, shoppingExpenses, theaterExpenses],
-          backgroundColor: [
-            "rgb(255, 99, 132)",
-            "rgb(54, 162, 235)",
-            "rgb(255, 205, 86)",
-          ],
-          hoverOffset: 4,
-        },
-      ],
-    },
-  });
+  myChart.data.datasets[0].data[0] = entertainmentExpenses;
+  myChart.data.datasets[0].data[1] = shoppingExpenses;
+  myChart.data.datasets[0].data[2] = theaterExpenses;
+  myChart.update();
 }
 
 function init() {
