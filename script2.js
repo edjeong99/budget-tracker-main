@@ -19,8 +19,7 @@ const shopping = document.getElementById("shopping");
 const theater = document.getElementById("theater");
 const ctx = document.getElementById("myChart");
 
-const transactions = [];
-
+let transactions = [];
 
 const myChart = new Chart(ctx, {
   type: "pie",
@@ -41,7 +40,6 @@ const myChart = new Chart(ctx, {
   },
 });
 
-
 // const setDate = () => {
 // let date = new Date();
 // let year = date.getFullYear();
@@ -58,31 +56,42 @@ function generateID() {
   return new Date().getTime();
 }
 function changeGoal() {
-
-  goalamount =  goalnumber.value;
+  goalamount = goalnumber.value;
   goal.innerHTML = `$${goalamount}`;
 
   let balanceAmount = goalamount - expense;
   balance.innerHTML = `$${balanceAmount}`;
 }
+function resetExpense() {
+  console.log("resetExpenseFunction");
+  transactions = [];
+  shoppingExpenses = 0;
+  entertainmentExpenses = 0;
+  theaterExpenses = 0;
+  updateValues();
+}
 function addTransaction(e) {
   e.preventDefault();
-  console.log(e)
-  console.log(e.target.value)
+  console.log(e);
+  console.log(e.target.value);
   const transaction = {
     id: generateID(),
     text: text.value,
     amount: +amount.value,
     category: category.value,
   };
-
+  console.log(transaction);
 
   transactions.push(transaction);
-  console.log(transactions);
   text.value = "";
   amount.value = "";
   category.value = "";
   
+
+  function reset {
+    
+  }
+
   //check category, if entertainment is in category then add to entertainmentExpense
   if (transaction.category === "Entertainment") {
     entertainmentExpenses = entertainmentExpenses + transaction.amount;
@@ -100,13 +109,12 @@ function addTransaction(e) {
 function updateValues() {
   // Loop through the transactions array and create a new array with only amounts
 
-// if category is "entertain"
-// add the amount to entertainExpense
+  // if category is "entertain"
+  // add the amount to entertainExpense
 
-// else if cate is "theater", add amount to theraterExp
-// else if cate is "shopping" add amount to shoppingExp
+  // else if cate is "theater", add amount to theraterExp
+  // else if cate is "shopping" add amount to shoppingExp
 
-  
   const amounts = transactions.map((transaction) => transaction.amount);
   expense = amounts.reduce((acc, val) => (acc += val), 0).toFixed(2);
   let balanceAmount = goalamount - expense;
@@ -118,12 +126,11 @@ function updateValues() {
   entertainment.innerHTML = `entertainment : $${entertainmentExpenses}`;
   shopping.innerHTML = `shopping : $${shoppingExpenses}`;
   theater.innerHTML = `Theater : $${theaterExpenses}`;
-console.log(myChart.data.datasets)
+  console.log(myChart.data.datasets);
   myChart.data.datasets[0].data[0] = entertainmentExpenses;
   myChart.data.datasets[0].data[1] = shoppingExpenses;
   myChart.data.datasets[0].data[2] = theaterExpenses;
   myChart.update();
-  
 }
 
 function init() {
@@ -132,7 +139,6 @@ function init() {
   // setDate();
   //transactions.forEach(addTransactionDOM);
   updateValues();
- 
 }
 //init();
 
