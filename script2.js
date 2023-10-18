@@ -21,25 +21,6 @@ const ctx = document.getElementById("myChart");
 
 const transactions = [];
 
-const myChart = new Chart(ctx, {
-  type: "pie",
-  data: {
-    labels: ["Entertainment", "Shopping", "Theater"],
-    datasets: [
-      {
-        label: "What I bought things in these category",
-        data: [0, 0, 0],
-        backgroundColor: [
-          "rgb(255, 99, 132)",
-          "rgb(54, 162, 235)",
-          "rgb(255, 205, 86)",
-        ],
-        hoverOffset: 4,
-      },
-    ],
-  },
-});
-
 
 const myChart = new Chart(ctx, {
   type: "pie",
@@ -94,18 +75,14 @@ function addTransaction(e) {
     amount: +amount.value,
     category: category.value,
   };
-  console.log(transaction);
+
 
   transactions.push(transaction);
+  console.log(transactions);
   text.value = "";
   amount.value = "";
   category.value = "";
   
-
-  function reset {
-    
-  }
-
   //check category, if entertainment is in category then add to entertainmentExpense
   if (transaction.category === "Entertainment") {
     entertainmentExpenses = entertainmentExpenses + transaction.amount;
