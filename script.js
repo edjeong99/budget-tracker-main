@@ -1,163 +1,135 @@
 "use strict";
+let goalamount = 1000;
+let expense = 0;
+let shoppingExpenses = 0;
+let entertainmentExpenses = 0;
+let theaterExpenses = 0;
 
 const balance = document.getElementById("balance");
-const money_plus = document.getElementById("money-plus");
+const goal = document.getElementById("goal");
 const money_minus = document.getElementById("money-minus");
-const list = document.getElementById("list");
-const form = document.getElementById("form");
-const text = document.getElementById("text");
 const amount = document.getElementById("amount");
+const text = document.getElementById("text");
+const goalnumber = document.getElementById("goalnumber");
+const category = document.getElementById("category-select");
+const currentMonth = document.getElementById("currentMonth");
+const dayLeft = document.getElementById("dayLeft");
+const entertainment = document.getElementById("entertainment");
+const shopping = document.getElementById("shopping");
+const theater = document.getElementById("theater");
+const ctx = document.getElementById("myChart");
 
-/* Array of transactions found on the user's browser.
-A stringified array is returned, so needs to be converted via JSON.parse() */
-const localStorageTransactions = JSON.parse(
-  localStorage.getItem("transactions")
-);
+let transactions = [];
 
-/* Transactions is the array of objects that each stores id, text, and amount.
-Extract from user's localStorage if it exists, otherwise an empty array. */
-let transactions =
-  localStorage.getItem("transactions") !== null ? localStorageTransactions : [];
 
-/**
- * Generates a unique ID for the transaction. For now, simply generates the
- * exact millisecond the transaction was created.
- * @returns number that represents a unique ID
- */
+
+const myChart = new Chart(ctx, {
+  type: "pie",
+  data: {
+    labels: ["Entertainment", "Shopping", "Theater"],
+    datasets: [
+      {
+        label: "What I bought things in these category",
+        data: [0, 0, 0],
+        backgroundColor: [
+          "rgb(255, 99, 132)",
+          "rgb(54, 162, 235)",
+          "rgb(255, 205, 86)",
+        ],
+        hoverOffset: 4,
+      },
+    ],
+  },
+});
+
+var canvas = document.getElementById("myChart");
+var parent = document.getElementById("canvas");
+canvas.width = canvas.offsetWidth;
+canvas.height = parent.offsetHeight;
+
+
 function generateID() {
   return new Date().getTime();
 }
+function changeGoal() {
+  goalamount = goalnumber.value;
+ // goal.innerHTML = `$${goalamount}`;
 
-/**
- * Adds the new transaction
- * @param {Event} e event when user presses submit button 'Add Transaction'
- */
-function addTransaction(e) {
-  // Prevent the event argument from actually submitting
+  let balanceAmount = goalamount - expense;
+  balance.innerHTML = `$${balanceAmount}`;
+}
+function resetExpense() {
+  console.log("resetExpenseFunction");
+  transactions = [];
+  shoppingExpenses = 0;
+  entertainmentExpenses = 0;
+  theaterExpenses = 0;
+  updateValues();
+}
+function addExpense(e) {
   e.preventDefault();
+  console.log(e);
+  console.log(e.target.value);
+  const transaction = {
+    id: generateID(),
+    text: text.value,
+    amount: +amount.value,
+    category: category.value,
+  };
+  console.log(transaction);
 
-  if (text.value.trim() === "" || amount.value.trim() === "") {
-    alert("Please add a Transaction Name and Amount");
-  } else {
-    const transaction = {
-      id: generateID(),
-      text: text.value,
-      amount: +amount.value,
-    };
+  transactions.push(transaction);
+  text.value = "";
+  amount.value = "";
+  category.value = "";
+  
 
-    // Push transaction the to array
-    transactions.push(transaction);
 
-    // Add transaction to the DOM
-    addTransactionDOM(transaction);
 
-    // Update values of the Budget container
-    updateValues();
-
-    // Sets the transaction in user's localStorage so data persists
-    updateLocalStorage();
-
-    // Clear the input fields
-    text.value = "";
-    amount.value = "";
+  //check category, if entertainment is in category then add to entertainmentExpense
+  if (transaction.category === "Entertainment") {
+    entertainmentExpenses = entertainmentExpenses + transaction.amount;
   }
-}
+  if (transaction.category === "Shopping") {
+    shoppingExpenses = shoppingExpenses + transaction.amount;
+  }
+  if (transaction.category === "Theater") {
+    theaterExpenses = theaterExpenses + transaction.amount;
+  }
 
-/**
- * Adds the transaction to the DOM
- * @param {*} transaction the amount of transaction (e.g, 20 or -10)
- */
-function addTransactionDOM(transaction) {
-  // Distinguish transaction as either expense or income
-  const sign = transaction.amount < 0 ? "-" : "+";
-
-
-
-  /* Recall: a list item in Transaction history follows the format:
-      <li class="plus">Cash <span>+$700</span><button class="delete-btn">X</button></li>
-  */
-
-  // Create a list item
-  const item = document.createElement("li");
-
-  // Add class based on amount
-  item.classList.add(transaction.amount < 0 ? "minus" : "plus");
-
-  // Create the HTML to list item
-  // Negative number has a minus sign, so wrap it with Math.abs to get only the magnitude
-  item.innerHTML = `
-    ${transaction.text} <span>${sign}${Math.abs(transaction.amount)}</span> 
-    <button class="delete-btn" onclick="removeTransaction(${
-      transaction.id
-    })">X</button></li>
-  `;
-
-  // Add the list item to the DOM as list's child node
-  list.appendChild(item);
-}
-
-/**
- * Update the budget by calculating the balance, income, and expenses.
- */
-function updateValues() {
-  // Loop through the transactions array and create a new array with only amounts
-  const amounts = transactions.map((transaction) => transaction.amount);
-
-  // Reduce the array of amounts to a total, also set it to two decimal points
-  const total = amounts.reduce((acc, val) => (acc += val), 0).toFixed(2);
-
-  // Get the income
-  const income = amounts
-    .filter((transaction) => transaction > 0)
-    .reduce((acc, val) => (acc += val), 0)
-    .toFixed(2);
-
-  const expense = amounts
-    .filter((transaction) => transaction < 0)
-    .reduce((acc, val) => (acc += val), 0)
-    .toFixed(2);
-
-  balance.innerHTML = `$${total}`;
-  money_plus.innerHTML = `$${income}`;
-  money_minus.innerHTML = `$${expense}`;
-}
-
-/**
- * Remove transaction by its ID from the DOM.
- * @param {number} id the unique id of the transaction
- */
-function removeTransaction(id) {
-  // Filter out the transaction by its id and save it to the array
-  transactions = transactions.filter((transaction) => transaction.id !== id);
-
-  // Sets the transaction in user's localStorage so data persists
-  updateLocalStorage();
-
-  // Reinitialize app after removal to update data on the page
-  init();
-}
-
-/**
- * Updates the localStorage on the user's browser with new transactions
- */
-function updateLocalStorage() {
-  localStorage.setItem("transactions", JSON.stringify(transactions));
-}
-
-/**
- * Initializes the app with seed data (found in user's localStorage).
- */
-function init() {
-  // Clear out the list
-  list.innerHTML = "";
-
-  // For each transactions, add it as a list item and to the DOM
-  transactions.forEach(addTransactionDOM);
   updateValues();
 }
 
-// Initialize the app
-init();
+function updateValues() {
+  // Loop through the transactions array and create a new array with only amounts
 
-/* Event Listeners */
-form.addEventListener("submit", addTransaction);
+  // if category is "entertain"
+  // add the amount to entertainExpense
+
+  // else if cate is "theater", add amount to theraterExp
+  // else if cate is "shopping" add amount to shoppingExp
+
+  const amounts = transactions.map((transaction) => transaction.amount);
+  expense = amounts.reduce((acc, val) => (acc += val), 0).toFixed(2);
+  let balanceAmount = goalamount - expense;
+
+  balance.innerHTML = `$${balanceAmount}`;
+//  goal.innerHTML = `$${goalamount}`;
+  money_minus.innerHTML = `$${expense}`;
+  //put each category expense into each of the category one by one!!!
+  
+  console.log(myChart.data.datasets);
+  myChart.data.datasets[0].data[0] = entertainmentExpenses;
+  myChart.data.datasets[0].data[1] = shoppingExpenses;
+  myChart.data.datasets[0].data[2] = theaterExpenses;
+  myChart.update();
+  
+  if (expense != 0) {
+    parent.style.display = "block";
+  } else {
+    parent.style.display = "none";
+  }
+}
+
+updateValues();
+form.addEventListener("submit", addExpense);
