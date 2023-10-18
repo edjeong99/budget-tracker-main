@@ -80,12 +80,17 @@ function addTransaction(e) {
     amount: +amount.value,
     category: category.value,
   };
+  console.log(transaction);
 
   transactions.push(transaction);
-  console.log(transaction);
   text.value = "";
   amount.value = "";
   category.value = "";
+  
+
+  function reset {
+    
+  }
 
   //check category, if entertainment is in category then add to entertainmentExpense
   if (transaction.category === "Entertainment") {
